@@ -1,38 +1,307 @@
-.App {
+@import url('https://fonts.googleapis.com/css?family=Lato:400, 700');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+/* Font for the clock */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400&display=swap');
+
+/* Global Styles */
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font: 16px/24px 'Lato', Arial, sans-serif;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media screen and (prefers-reduced-motion: reduce), (update: slow) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important; /* Hat tip Nick/cssremedy (https://css-tricks.com/revisiting-prefers-reduced-motion-the-reduced-motion-media-query/#comment-1700170) */
+    transition-duration: 0.001ms !important;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.sr-only {
+  position: absolute;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Local Styles */
+
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin: 0;
+  padding: 5%;
+  width: 100vw;
+  height: 100vh;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* Form */
+
+.form {
+  display: flex;
+  width: 85%;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 1rem auto 1.5rem auto;
+  padding: 0;
+  padding-bottom: 0.5rem; /* For iPhone X */
+}
+
+.form-item {
+  flex: 0 1 auto;
+  margin: 0.75rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+/* Input */
+
+.form-input {
+  display: block;
+  width: 100%;
+  min-height: 3.5rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  background-color: white;
+  color: black;
+  margin-top: 1rem;
+  padding: 0.75rem 0.5rem;
+  font-size: 1rem;
+  font-family: 'Lato', Arial, sans-serif;
+  font-weight: bolder;
+  text-align: center;
+  letter-spacing: 0.15rem;
+}
+
+.form-input:active,
+.form-input:focus,
+.form-input:hover {
+  border-bottom: thick solid black;
+  font-weight: bold;
+  outline: none;
+}
+
+.form-input-constraint {
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+/* .form-input-validity::after {
+  padding-left: 0.3125rem;
+}
+
+input.form-input:invalid + .form-input-validity::after {
+  content: '✖';
+}
+
+input.form-input:valid + .form-input-validity::after {
+  content: '✓';
+} */
+
+/* CTA Button */
+
+.form-cta {
+  align-self: center;
+  width: auto;
+  margin-bottom: 1.9rem;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  background-color: white;
+  color: black;
+  font-weight: bolder;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.form-cta:active,
+.form-cta:focus,
+.form-cta:hover {
+  background-color: black;
   color: white;
+  font-weight: bold;
+  outline: none;
 }
 
-.App-link {
-  color: #61dafb;
+/* Clock */
+
+svg.watch-svg {
+  width: 10rem;
+  fill: white;
+  stroke: black;
+  stroke-width: 0.75;
+  stroke-linecap: round;
+  /* Rotate the clock from 3 to 12 */
+  transform: rotate(-90deg);
+  /* Hands position on load */
+  --start-seconds: 43;
+  --start-minutes: 07;
+  --start-hours: 08;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Clock - Marks.
+Move <g> element to the center and rotate the lines in 
+intervals of 30 degrees to make them equally spaced 
+around the clock. Let’s also make the 3, 6, 9 and 12 hour 
+marks thicker than the rest by setting theirstroke-width 
+to 0.5 and for the rest of the hands to 0.2. */
+.watch-svg-marks {
+  transform: translate(20px, 20px);
+  stroke-width: 0.2;
+}
+.watch-svg-marks > line:nth-child(1) {
+  /* There are 12 marks, so we rotate by 30deg (12 * 30 = 360) */
+  transform: rotate(30deg);
+}
+.watch-svg-marks > line:nth-child(2) {
+  transform: rotate(calc(2 * 30deg));
+}
+.watch-svg-marks > line:nth-child(3) {
+  transform: rotate(calc(3 * 30deg));
+  stroke-width: 0.5;
+}
+.watch-svg-marks > line:nth-child(4) {
+  transform: rotate(calc(4 * 30deg));
+}
+.watch-svg-marks > line:nth-child(5) {
+  transform: rotate(calc(5 * 30deg));
+}
+.watch-svg-marks > line:nth-child(6) {
+  transform: rotate(calc(6 * 30deg));
+  stroke-width: 0.5;
+}
+.watch-svg-marks > line:nth-child(7) {
+  transform: rotate(calc(7 * 30deg));
+}
+.watch-svg-marks > line:nth-child(8) {
+  transform: rotate(calc(8 * 30deg));
+}
+.watch-svg-marks > line:nth-child(9) {
+  transform: rotate(calc(9 * 30deg));
+  stroke-width: 0.5;
+}
+.watch-svg-marks > line:nth-child(10) {
+  transform: rotate(calc(10 * 30deg));
+}
+.watch-svg-marks > line:nth-child(11) {
+  transform: rotate(calc(11 * 30deg));
+}
+.watch-svg-marks > line:nth-child(12) {
+  transform: rotate(calc(12 * 30deg));
+  stroke-width: 0.5;
+}
+
+/* Clock - Hands.
+Move the hands of the clock to the center and give them 
+different values of stroke-width to distinguish them. */
+/* Formula: 
+(Number of seconds/minutes) * 6degrees = rotation of the 
+respective hand for both the seconds and minutes hands.
+The clock can only indicate 12 hours => multiply the 
+number of hours by 30degrees to compute the rotation of 
+the hour hand. */
+.watch-svg-seconds,
+.watch-svg-minute,
+.watch-svg-hour {
+  transform: translate(20px, 20px) rotate(0deg);
+}
+.watch-svg-seconds {
+  stroke-width: 0.5;
+  stroke: teal;
+  transform: translate(20px, 20px) rotate(calc(var(--start-seconds) * 6deg));
+}
+.watch-svg-minute {
+  stroke-width: 0.75;
+  transform: translate(20px, 20px) rotate(calc(var(--start-minutes) * 6deg));
+}
+.watch-svg-hour {
+  stroke-width: 1;
+  transform: translate(20px, 20px) rotate(calc(var(--start-hours) * 30deg));
+}
+.watch-svg-pin {
+  stroke: teal;
+  stroke-width: 0.2;
+}
+
+/* Clock - Branding text */
+.watch-svg-text {
+  text-align: center;
+  font-size: 0.2rem;
+  font-family: sans-serif;
+  letter-spacing: 0.5px;
+  transform: translate(0.78rem, 0.88rem) rotate(90deg);
+  /* transform: translate(14px, 19px) rotate(90deg); */
+  fill: teal;
+  stroke: none;
+}
+
+/* Clock - Other */
+
+.watch-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0;
+  padding: 5%;
+  width: 100vw;
+  height: 100vh;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.watch-image {
+  /* Position aligned with .watch-remove-btn */
+  position: relative;
+  padding: 0.5rem;
+}
+
+.watch-remove-btn {
+  /* Depends on the .watch-image position */
+  position: absolute;
+  top: -0.2rem;
+  right: 0;
+  min-width: 2rem;
+  height: 2rem;
+  margin: 0.25rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  background-color: white;
+  font-size: 0.5rem;
+  font-weight: bolder;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.watch-remove-btn:active,
+.watch-remove-btn:focus,
+.watch-remove-btn:hover {
+  border-color: white;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  outline: none;
+}
+
+.watch-digital {
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-size: 1.25rem;
 }
