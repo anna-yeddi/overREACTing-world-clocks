@@ -45,9 +45,9 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0;
-  padding: 5%;
+  padding: 2% 5%;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   font-weight: bold;
   text-align: center;
   letter-spacing: 1px;
@@ -122,7 +122,7 @@ input.form-input:valid + .form-input-validity::after {
 .form-cta {
   align-self: center;
   width: auto;
-  margin-bottom: 1.9rem;
+  margin-bottom: 0.9rem;
   padding: 0.75rem 1.25rem;
   border: 2px solid black;
   border-radius: 0.5rem;
@@ -142,141 +142,32 @@ input.form-input:valid + .form-input-validity::after {
   outline: none;
 }
 
-/* Clock */
-
-svg.watch-svg {
-  width: 10rem;
-  fill: white;
-  stroke: black;
-  stroke-width: 0.75;
-  stroke-linecap: round;
-  /* Rotate the clock from 3 to 12 */
-  transform: rotate(-90deg);
-  /* Hands position on load */
-  --start-seconds: 43;
-  --start-minutes: 07;
-  --start-hours: 08;
-}
-
-/* Clock - Marks.
-Move <g> element to the center and rotate the lines in 
-intervals of 30 degrees to make them equally spaced 
-around the clock. Let’s also make the 3, 6, 9 and 12 hour 
-marks thicker than the rest by setting theirstroke-width 
-to 0.5 and for the rest of the hands to 0.2. */
-.watch-svg-marks {
-  transform: translate(20px, 20px);
-  stroke-width: 0.2;
-}
-.watch-svg-marks > line:nth-child(1) {
-  /* There are 12 marks, so we rotate by 30deg (12 * 30 = 360) */
-  transform: rotate(30deg);
-}
-.watch-svg-marks > line:nth-child(2) {
-  transform: rotate(calc(2 * 30deg));
-}
-.watch-svg-marks > line:nth-child(3) {
-  transform: rotate(calc(3 * 30deg));
-  stroke-width: 0.5;
-}
-.watch-svg-marks > line:nth-child(4) {
-  transform: rotate(calc(4 * 30deg));
-}
-.watch-svg-marks > line:nth-child(5) {
-  transform: rotate(calc(5 * 30deg));
-}
-.watch-svg-marks > line:nth-child(6) {
-  transform: rotate(calc(6 * 30deg));
-  stroke-width: 0.5;
-}
-.watch-svg-marks > line:nth-child(7) {
-  transform: rotate(calc(7 * 30deg));
-}
-.watch-svg-marks > line:nth-child(8) {
-  transform: rotate(calc(8 * 30deg));
-}
-.watch-svg-marks > line:nth-child(9) {
-  transform: rotate(calc(9 * 30deg));
-  stroke-width: 0.5;
-}
-.watch-svg-marks > line:nth-child(10) {
-  transform: rotate(calc(10 * 30deg));
-}
-.watch-svg-marks > line:nth-child(11) {
-  transform: rotate(calc(11 * 30deg));
-}
-.watch-svg-marks > line:nth-child(12) {
-  transform: rotate(calc(12 * 30deg));
-  stroke-width: 0.5;
-}
-
-/* Clock - Hands.
-Move the hands of the clock to the center and give them 
-different values of stroke-width to distinguish them. */
-/* Formula: 
-(Number of seconds/minutes) * 6degrees = rotation of the 
-respective hand for both the seconds and minutes hands.
-The clock can only indicate 12 hours => multiply the 
-number of hours by 30degrees to compute the rotation of 
-the hour hand. */
-.watch-svg-seconds,
-.watch-svg-minute,
-.watch-svg-hour {
-  transform: translate(20px, 20px) rotate(0deg);
-}
-.watch-svg-seconds {
-  stroke-width: 0.5;
-  stroke: teal;
-  transform: translate(20px, 20px) rotate(calc(var(--start-seconds) * 6deg));
-}
-.watch-svg-minute {
-  stroke-width: 0.75;
-  transform: translate(20px, 20px) rotate(calc(var(--start-minutes) * 6deg));
-}
-.watch-svg-hour {
-  stroke-width: 1;
-  transform: translate(20px, 20px) rotate(calc(var(--start-hours) * 30deg));
-}
-.watch-svg-pin {
-  stroke: teal;
-  stroke-width: 0.2;
-}
-
-/* Clock - Branding text */
-.watch-svg-text {
-  text-align: center;
-  font-size: 0.2rem;
-  font-family: sans-serif;
-  letter-spacing: 0.5px;
-  transform: translate(0.78rem, 0.88rem) rotate(90deg);
-  /* transform: translate(14px, 19px) rotate(90deg); */
-  fill: teal;
-  stroke: none;
-}
+/* 
+ * Clock
+ */
 
 /* Clock - Other */
 
-.watch-container {
+.clock-container {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   margin: 0;
-  padding: 5%;
-  width: 100vw;
-  height: 100vh;
+  /* padding: 5%; */
+  /* width: 100vw; */
   font-weight: bold;
   text-align: center;
   letter-spacing: 1px;
 }
 
-.watch-image {
-  /* Position aligned with .watch-remove-btn */
+.clock-image {
+  /* Position aligned with .clock-remove-btn */
   position: relative;
   padding: 0.5rem;
 }
 
-.watch-remove-btn {
-  /* Depends on the .watch-image position */
+.clock-remove-btn {
+  /* Depends on the .clock-image position */
   position: absolute;
   top: -0.2rem;
   right: 0;
@@ -291,9 +182,9 @@ the hour hand. */
   text-transform: uppercase;
   transition: all 0.2s;
 }
-.watch-remove-btn:active,
-.watch-remove-btn:focus,
-.watch-remove-btn:hover {
+.clock-remove-btn:active,
+.clock-remove-btn:focus,
+.clock-remove-btn:hover {
   border-color: white;
   background-color: black;
   color: white;
@@ -301,7 +192,181 @@ the hour hand. */
   outline: none;
 }
 
-.watch-digital {
+.clock-digital {
   font-family: 'Orbitron', Arial, sans-serif;
   font-size: 1.25rem;
+}
+
+/* Clock - Animated
+Created by John O. Paul from The Andela Way post on 
+https://medium.com/the-andela-way/create-a-pure-css-clock-with-svg-f123bcc41e46 */
+
+.clock-svg {
+  width: 10rem;
+  fill: white;
+  stroke: black;
+  stroke-width: 0.75;
+  stroke-linecap: round;
+  /* Rotate the clock from 3 to 12 */
+  transform: rotate(-90deg);
+  /* Hands position on load */
+  --start-seconds: 43;
+  --start-minutes: 07;
+  --start-hours: 08;
+  /* To test the minute hand:
+  - uncomment the following code,
+  - the minute hand should move one step 
+  with the seconds hand and stop for a minute.*/
+  /* --start--seconds: 59;
+  --start-minutes: 59;
+  --start-hours: 11; */
+  /* To test the hour hand:
+  - uncomment the following code,
+  - the hour hand should be midway 
+  between the 11 and 12 O’clock marks. */
+  /* --start--seconds: 30;
+  --start-minutes: 30;
+  --start-hours: 11; */
+}
+
+/* Clock - Marks.
+Move <g> element to the center and rotate the lines in 
+intervals of 30 degrees to make them equally spaced 
+around the clock. Let’s also make the 3, 6, 9 and 12 hour 
+marks thicker than the rest by setting their stroke-width 
+to 0.5 and for the rest of the hands to 0.2. */
+.clock-svg-marks {
+  transform: translate(20px, 20px);
+  stroke-width: 0.2;
+}
+.clock-svg-marks > line:nth-child(1) {
+  /* There are 12 marks, so we rotate by 30deg (12 * 30 = 360) */
+  transform: rotate(30deg);
+}
+.clock-svg-marks > line:nth-child(2) {
+  transform: rotate(calc(2 * 30deg));
+}
+.clock-svg-marks > line:nth-child(3) {
+  transform: rotate(calc(3 * 30deg));
+  stroke-width: 0.5;
+}
+.clock-svg-marks > line:nth-child(4) {
+  transform: rotate(calc(4 * 30deg));
+}
+.clock-svg-marks > line:nth-child(5) {
+  transform: rotate(calc(5 * 30deg));
+}
+.clock-svg-marks > line:nth-child(6) {
+  transform: rotate(calc(6 * 30deg));
+  stroke-width: 0.5;
+}
+.clock-svg-marks > line:nth-child(7) {
+  transform: rotate(calc(7 * 30deg));
+}
+.clock-svg-marks > line:nth-child(8) {
+  transform: rotate(calc(8 * 30deg));
+}
+.clock-svg-marks > line:nth-child(9) {
+  transform: rotate(calc(9 * 30deg));
+  stroke-width: 0.5;
+}
+.clock-svg-marks > line:nth-child(10) {
+  transform: rotate(calc(10 * 30deg));
+}
+.clock-svg-marks > line:nth-child(11) {
+  transform: rotate(calc(11 * 30deg));
+}
+.clock-svg-marks > line:nth-child(12) {
+  transform: rotate(calc(12 * 30deg));
+  stroke-width: 0.5;
+}
+
+/* Clock - Hands.
+Move the hands of the clock to the center and give them 
+different values of stroke-width to distinguish them. */
+/* Formula: 
+(Number of seconds/minutes) * 6degrees = rotation of the 
+respective hand for both the seconds and minutes hands.
+The clock can only indicate 12 hours => multiply the 
+number of hours by 30degrees to compute the rotation of 
+the hour hand. */
+.clock-svg-seconds,
+.clock-svg-minute,
+.clock-svg-hour {
+  transform: translate(20px, 20px) rotate(0deg);
+}
+.clock-svg-seconds {
+  stroke-width: 0.5;
+  stroke: teal;
+  transform: translate(20px, 20px) rotate(calc(var(--start-seconds) * 6deg));
+  /* Define an animation and use it on the seconds hand
+  (.seconds). The animation timing function is steps(60). */
+  animation: rotateSecondsHand 60s steps(60) infinite;
+}
+@keyframes rotateSecondsHand {
+  from {
+    transform: translate(20px, 20px) rotate(calc(var(--start-seconds) * 6deg));
+  }
+  to {
+    transform: translate(20px, 20px)
+      rotate(calc(var(--start-seconds) * 6deg + 360deg));
+  }
+}
+
+.clock-svg-minute {
+  stroke-width: 0.75;
+  transform: translate(20px, 20px) rotate(calc(var(--start-minutes) * 6deg));
+  /* Define an animation and use it on the minute hand (.minute). 
+  The animation timing function is steps(60). 
+  Also, set the animation-delay to a negative value based on the value 
+  of --start-seconds. Do this to “forward” the animation => the minute hand 
+  moves whenever the seconds hand reaches the 12 O’clock mark.*/
+  animation: rotateMinuteHand 3600s steps(60) infinite;
+  animation-delay: calc(var(--start-seconds) * -1 * 1s);
+}
+@keyframes rotateMinuteHand {
+  from {
+    transform: translate(20px, 20px) rotate(calc(var(--start-minutes) * 6deg));
+  }
+  to {
+    transform: translate(20px, 20px)
+      rotate(calc(var(--start-minutes) * 6deg + 360deg));
+  }
+}
+
+.clock-svg-hour {
+  stroke-width: 1;
+  transform: translate(20px, 20px) rotate(calc(var(--start-hours) * 30deg));
+  /* Define an animation for the hour hand (.hour), animation-delay is 
+  dependent on the values of --start-seconds and --start-minutes. */
+  animation: rotateHourHand calc(12 * 60 * 60s) linear infinite;
+  animation-delay: calc(
+    calc(var(--start-minutes) * -60 * 1s) + calc(var(--start-seconds) * -1 * 1s)
+  );
+}
+@keyframes rotateHourHand {
+  from {
+    transform: translate(20px, 20px) rotate(calc(var(--start-hours) * 30deg));
+  }
+  to {
+    transform: translate(20px, 20px)
+      rotate(calc(var(--start-hours) * 30deg + 360deg));
+  }
+}
+
+.clock-svg-pin {
+  stroke: teal;
+  stroke-width: 0.2;
+}
+
+/* Clock - Branding text */
+.clock-svg-text {
+  text-align: center;
+  font-size: 0.2rem;
+  font-family: sans-serif;
+  letter-spacing: 0.5px;
+  transform: translate(0.78rem, 0.88rem) rotate(90deg);
+  /* transform: translate(14px, 19px) rotate(90deg); */
+  fill: teal;
+  stroke: none;
 }
