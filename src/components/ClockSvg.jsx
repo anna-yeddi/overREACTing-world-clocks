@@ -32,7 +32,7 @@ function ClockSvg(props) {
         <line x1="0" y1="0" x2="16" y2="0" className="clock-svg-seconds" />
         <circle cx="20" cy="20" r="0.7" className="clock-svg-pin" />
         <text x="0" y="0" className="clock-svg-text">
-          {gmtShow}
+          GMT{gmtShow}
         </text>
       </g>
     </svg>

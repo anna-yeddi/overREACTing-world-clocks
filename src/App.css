@@ -173,7 +173,7 @@ input.form-input:valid + .form-input-validity::after {
   right: 0;
   min-width: 2rem;
   height: 2rem;
-  margin: 0.25rem;
+  margin: -0.25rem;
   border: 2px solid black;
   border-radius: 0.5rem;
   background-color: white;
@@ -210,9 +210,9 @@ https://medium.com/the-andela-way/create-a-pure-css-clock-with-svg-f123bcc41e46 
   /* Rotate the clock from 3 to 12 */
   transform: rotate(-90deg);
   /* Hands position on load */
-  --start-seconds: 43;
-  --start-minutes: 07;
-  --start-hours: 08;
+  --start-seconds: 00;
+  --start-minutes: 00;
+  --start-hours: 00;
   /* To test the minute hand:
   - uncomment the following code,
   - the minute hand should move one step 
@@ -236,7 +236,7 @@ around the clock. Let’s also make the 3, 6, 9 and 12 hour
 marks thicker than the rest by setting their stroke-width 
 to 0.5 and for the rest of the hands to 0.2. */
 .clock-svg-marks {
-  transform: translate(20px, 20px);
+  transform: translate(1.25rem, 1.25rem);
   stroke-width: 0.2;
 }
 .clock-svg-marks > line:nth-child(1) {
@@ -293,63 +293,84 @@ the hour hand. */
 .clock-svg-seconds,
 .clock-svg-minute,
 .clock-svg-hour {
-  transform: translate(20px, 20px) rotate(0deg);
+  transform: translate(1.25rem, 1.25rem) rotate(0deg);
 }
 .clock-svg-seconds {
   stroke-width: 0.5;
   stroke: teal;
-  transform: translate(20px, 20px) rotate(calc(var(--start-seconds) * 6deg));
+  transform: translate(1.25rem, 1.25rem)
+    rotate(calc(var(--start-seconds) * 6deg));
+
+  /* 
+  * Animation disabled for React to tick
+  */
+
   /* Define an animation and use it on the seconds hand
   (.seconds). The animation timing function is steps(60). */
-  animation: rotateSecondsHand 60s steps(60) infinite;
+  /* animation: rotateSecondsHand 60s steps(60) infinite; */
 }
 @keyframes rotateSecondsHand {
   from {
-    transform: translate(20px, 20px) rotate(calc(var(--start-seconds) * 6deg));
+    transform: translate(1.25rem, 1.25rem)
+      rotate(calc(var(--start-seconds) * 6deg));
   }
   to {
-    transform: translate(20px, 20px)
+    transform: translate(1.25rem, 1.25rem)
       rotate(calc(var(--start-seconds) * 6deg + 360deg));
   }
 }
 
 .clock-svg-minute {
   stroke-width: 0.75;
-  transform: translate(20px, 20px) rotate(calc(var(--start-minutes) * 6deg));
+  transform: translate(1.25rem, 1.25rem)
+    rotate(calc(var(--start-minutes) * 6deg));
+
+  /* 
+  * Animation disabled for React to tick
+  */
+
   /* Define an animation and use it on the minute hand (.minute). 
   The animation timing function is steps(60). 
   Also, set the animation-delay to a negative value based on the value 
   of --start-seconds. Do this to “forward” the animation => the minute hand 
   moves whenever the seconds hand reaches the 12 O’clock mark.*/
-  animation: rotateMinuteHand 3600s steps(60) infinite;
+  /* animation: rotateMinuteHand 3600s steps(60) infinite; */
   animation-delay: calc(var(--start-seconds) * -1 * 1s);
 }
 @keyframes rotateMinuteHand {
   from {
-    transform: translate(20px, 20px) rotate(calc(var(--start-minutes) * 6deg));
+    transform: translate(1.25rem, 1.25rem)
+      rotate(calc(var(--start-minutes) * 6deg));
   }
   to {
-    transform: translate(20px, 20px)
+    transform: translate(1.25rem, 1.25rem)
       rotate(calc(var(--start-minutes) * 6deg + 360deg));
   }
 }
 
 .clock-svg-hour {
   stroke-width: 1;
-  transform: translate(20px, 20px) rotate(calc(var(--start-hours) * 30deg));
+  transform: translate(1.25rem, 1.25rem)
+    rotate(calc(var(--start-hours) * 30deg));
+
+  /* 
+  * Animation disabled for React to tick
+  */
+
   /* Define an animation for the hour hand (.hour), animation-delay is 
   dependent on the values of --start-seconds and --start-minutes. */
-  animation: rotateHourHand calc(12 * 60 * 60s) linear infinite;
+  /* animation: rotateHourHand calc(12 * 60 * 60s) linear infinite; */
   animation-delay: calc(
     calc(var(--start-minutes) * -60 * 1s) + calc(var(--start-seconds) * -1 * 1s)
   );
 }
 @keyframes rotateHourHand {
   from {
-    transform: translate(20px, 20px) rotate(calc(var(--start-hours) * 30deg));
+    transform: translate(1.25rem, 1.25rem)
+      rotate(calc(var(--start-hours) * 30deg));
   }
   to {
-    transform: translate(20px, 20px)
+    transform: translate(1.25rem, 1.25rem)
       rotate(calc(var(--start-hours) * 30deg + 360deg));
   }
 }

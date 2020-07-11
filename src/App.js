@@ -33,7 +33,7 @@ function App() {
     setClocks(
       (prevClocks) =>
         prevClocks.concat([{ city: form.city, gmt: form.gmt, id: nanoid(4) }])
-      // prevClocks.push(newClocks)
+      // prevClocks.concat([{ city: form.city, gmt: form.gmt, id: nanoid(4) }])
     )
     console.log('Form ', form, 'clocks ', clocks)
 
