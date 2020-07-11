@@ -37,7 +37,7 @@ function Clocks(props) {
 
   const clockSvg = document.getElementById('clock-svg-00')
 
-  console.log(clockSvg)
+  // console.log(clockSvg)
 
   // Update CSS for .clock-svg
   const addTimeToClock = () =>
@@ -45,24 +45,22 @@ function Clocks(props) {
       document.documentElement.style.setProperty(key, startTime[key])
     })
 
-  console.log(timeNowHr, timeNowMin, typeof timeNowSec)
+  // console.log(timeNowHr, timeNowMin, typeof timeNowSec)
 
   return (
-    <div className="clock-container">
-      <div className="clock">
-        <h2 className="clock-city">
-          {clock.city} <small className="clock-timezone">({gmtShow})</small>
-        </h2>
-        <div className="clock-image">
-          <ClockSvg clock={clock} gmtShow={gmtShow} />
-          <ClockBtnRemove
-            id={clock.id}
-            city={clock.city}
-            onRemove={handleRemove}
-          />
-        </div>
-        <h3 className="clock-digital">{timeNow}</h3>
+    <div className="clock">
+      <h2 className="clock-city">
+        {clock.city} <small className="clock-timezone">({gmtShow})</small>
+      </h2>
+      <div className="clock-image">
+        <ClockSvg clock={clock} gmtShow={gmtShow} />
+        <ClockBtnRemove
+          id={clock.id}
+          city={clock.city}
+          onRemove={handleRemove}
+        />
       </div>
+      <h3 className="clock-digital">{timeNow}</h3>
     </div>
   )
 }

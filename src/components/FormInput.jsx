@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 function FormInput(props) {
   const handleInput = (e) => {
     const { name, value } = e.target
-    console.log('got it!', name, value)
 
     // Parse value to integer if a number is expected
     if (props.type === 'number') {

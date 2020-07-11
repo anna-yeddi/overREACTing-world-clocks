@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import FormInput from './FormInput'
 
 function CityForm(props) {
-  console.log(props)
+  const { form } = props
 
   const handleInput = (name, value) => {
     props.onInput(name, value)
@@ -13,8 +13,7 @@ function CityForm(props) {
   const handleSubmit = (e) => {
     // Prevent default submit event
     e.preventDefault()
-
-    props.onSubmit()
+    props.onSubmit(form)
   }
 
   return (

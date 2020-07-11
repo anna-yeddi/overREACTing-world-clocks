@@ -5,6 +5,7 @@ import CityForm from './components/CityForm'
 import Clocks from './components/Clocks'
 
 function App() {
+  // Default clock on load
   const initialClocks = [
     {
       city: 'New York',
@@ -12,6 +13,7 @@ function App() {
       id: '007',
     },
   ]
+  // Flash the form
   const emptyForm = { city: '', gmt: 0 }
 
   const [clocks, setClocks] = useState(initialClocks)
@@ -27,9 +29,11 @@ function App() {
 
   const handleSubmit = () => {
     // Update state with a new clock with new id
-    // const formWithId = {..}
-    setClocks((prevClocks) =>
-      prevClocks.push({ city: form.city, gmt: form.city, id: nanoid(4) })
+
+    setClocks(
+      (prevClocks) =>
+        prevClocks.concat([{ city: form.city, gmt: form.gmt, id: nanoid(4) }])
+      // prevClocks.push(newClocks)
     )
     console.log('Form ', form, 'clocks ', clocks)
 
@@ -48,9 +52,11 @@ function App() {
       <CityForm form={form} onInput={handleInput} onSubmit={handleSubmit}>
         Add Clock
       </CityForm>
-      {clocks.map((o) => (
-        <Clocks clock={o} onRemove={handleRemove} key={o.id} />
-      ))}
+      <div className="clock-container">
+        {clocks.map((o) => (
+          <Clocks clock={o} onRemove={handleRemove} key={o.id} />
+        ))}
+      </div>
     </div>
   )
 }
