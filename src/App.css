@@ -160,6 +160,10 @@ input.form-input:valid + .form-input-validity::after {
   letter-spacing: 1px;
 }
 
+.clock {
+  padding: 0 1.5rem;
+}
+
 .clock-image {
   /* Position aligned with .clock-remove-btn */
   position: relative;
@@ -382,11 +386,11 @@ the hour hand. */
 
 /* Clock - Branding text */
 .clock-svg-text {
-  text-align: center;
+  margin: 0 auto;
   font-size: 0.2rem;
   font-family: sans-serif;
   letter-spacing: 0.5px;
-  transform: translate(0.78rem, 0.88rem) rotate(90deg);
+  transform: translate(0.78rem, 0.98rem) rotate(90deg);
   /* transform: translate(14px, 19px) rotate(90deg); */
   fill: teal;
   stroke: none;
