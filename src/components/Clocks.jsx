@@ -1,80 +1,75 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ClockSvg from './ClockSvg'
-import ClockBtnRemove from './ClockBtnRemove'
+import Clock from './Clock'
 
-function Clocks(props) {
-  const { clock } = props
+class Clocks extends React.Component {
+  constructor(props) {
+    super(props)
 
-  // Prepare a label for GMT value
-  const gmtShow = clock.gmt >= 0 ? 'GMT+' + clock.gmt : 'GMT' + clock.gmt
+    // Set a start time as a state
+    this.state = { now: new Date() }
+
+    // Bind remove event handler
+    this.handleRemove = this.handleRemove.bind(this)
+  }
+
+  componentDidMount() {
+    // Set timeout for hands' position to update every second
+    this.timerID = setInterval(() => {
+      this.tick()
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    // Clear timeout
+    clearInterval(this.timerID)
+  }
+
+  // Move seconds hand
+  tick() {
+    const now = new Date(new Date().getTime())
+
+    this.setState({
+      now,
+    })
+  }
 
   // Lift state update up
-  const handleRemove = (id) => {
-    props.onRemove(id)
+  handleRemove = (id) => {
+    this.props.onRemove(id)
   }
 
-  // Capture and store the current time:
-  const now = new Date(),
-    options = {
-      // day: 'numeric',
-      // month: 'long',
-      // weekday: 'long',
-      hour: '2-digit',
-      minute: '2-digit',
-    },
-    timeNow = now.toLocaleString(undefined, options),
-    timeNowHr = now.getUTCHours(),
-    timeNowMin = now.getUTCMinutes(),
-    timeNowSec = now.getUTCSeconds()
-
-  // Set a start time
-  const startTime = {
-    '--start-seconds': timeNowSec,
-    '--start-minutes': timeNowMin,
-    '--start-hours': timeNowHr,
-  }
-
-  const clockSvg = document.getElementById('clock-svg-00')
-
-  // console.log(clockSvg)
-
-  // Update CSS for .clock-svg
-  const addTimeToClock = () =>
-    Object.keys(startTime).map((key) => {
-      document.documentElement.style.setProperty(key, startTime[key])
-    })
-
-  // console.log(timeNowHr, timeNowMin, typeof timeNowSec)
-
-  return (
-    <div className="clock">
-      <h2 className="clock-city">
-        {clock.city} <small className="clock-timezone">({gmtShow})</small>
-      </h2>
-      <div className="clock-image">
-        <ClockSvg clock={clock} gmtShow={gmtShow} />
-        <ClockBtnRemove
-          id={clock.id}
-          city={clock.city}
-          onRemove={handleRemove}
-        />
+  render() {
+    return (
+      <div className="clock-container">
+        {this.props.clocks.map((o) => (
+          <Clock
+            clock={o}
+            now={this.state.now}
+            onRemove={this.handleRemove}
+            key={o.id}
+          />
+        ))}
       </div>
-      <h3 className="clock-digital">{timeNow}</h3>
-    </div>
-  )
+    )
+  }
 }
 
 Clocks.propTypes = {
-  /** @param {Object} clock Set of city data for the clock */
-  clock: PropTypes.shape({
-    /** @param {string} id Identificator for the city data object */
-    id: PropTypes.string.isRequired,
-    /** @param {string} city Name of the city for the clock */
-    city: PropTypes.string.isRequired,
-    /** @param {number} gmt Offset / Time zone for the clock */
-    gmt: PropTypes.number.isRequired,
-  }),
+  /** @param {Array [Object]} clocks Set of objects with city data for clocks */
+  clocks: PropTypes.arrayOf(
+    PropTypes.shape({
+      /** @param {Object {string|number}} clock Set of city data for the clock */
+      clock: PropTypes.shape({
+        /** @param {string} id Identificator for the city data object */
+        id: PropTypes.string.isRequired,
+        /** @param {string} city Name of the city for the clock */
+        city: PropTypes.string.isRequired,
+        /** @param {number} gmt Offset / Time zone for the clock */
+        gmt: PropTypes.number.isRequired,
+      }),
+    })
+  ).isRequired,
   /** @param {func} onRemove Function to lift the state up */
   onRemove: PropTypes.func.isRequired,
 }
